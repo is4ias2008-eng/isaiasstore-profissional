@@ -23,7 +23,7 @@ if (!MONGO_URI) {
 
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors());
-app.use(express.json({ limit: "50kb" }));
+app.use(express.json({ limit: "80kb" }));
 app.use(express.static(path.join(__dirname, "public")));
 
 const loginLimiter = rateLimit({
@@ -36,7 +36,7 @@ const loginLimiter = rateLimit({
 
 const generalLimiter = rateLimit({
   windowMs: 60 * 1000,
-  limit: 120,
+  limit: 150,
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: "Muitas requisições. Tente novamente em instantes." }
@@ -143,11 +143,9 @@ async function getStoreOpen() {
 async function verifyGoogleToken(credential) {
   const response = await fetch("https://oauth2.googleapis.com/tokeninfo?id_token=" + credential);
   if (!response.ok) return null;
-
   const data = await response.json();
   if (data.aud !== GOOGLE_CLIENT_ID) return null;
   if (!data.email_verified) return null;
-
   return data;
 }
 
@@ -173,12 +171,7 @@ app.post("/api/google-login", loginLimiter, async (req, res) => {
       });
     }
 
-    const token = jwt.sign(
-      { id: user._id, username: user.username, name: user.name, role: user.role },
-      JWT_SECRET,
-      { expiresIn: "7d" }
-    );
-
+    const token = jwt.sign({ id: user._id, username: user.username, name: user.name, role: user.role }, JWT_SECRET, { expiresIn: "7d" });
     return res.json({ token, role: user.role, username: user.username, name: user.name });
   } catch {
     return res.status(500).json({ error: "Erro ao entrar com Google" });
@@ -200,7 +193,6 @@ app.post("/api/register", async (req, res) => {
     if (exists) return res.status(400).json({ error: "Usuário já existe" });
 
     const hash = await bcrypt.hash(password, 12);
-
     await User.create({ name, username, password: hash, role: "cliente", provider: "local" });
 
     return res.json({ ok: true });
@@ -211,7 +203,8 @@ app.post("/api/register", async (req, res) => {
 
 app.post("/api/login", loginLimiter, async (req, res) => {
   try {
-    const username = sanitize(req.body.username).toLowerCase();
+    const usernameRaw = sanitize(req.body.username);
+    const username = usernameRaw.toLowerCase();
     const password = String(req.body.password || "");
 
     if (username === ADMIN_USER.toLowerCase() && password === ADMIN_PASSWORD) {
@@ -226,7 +219,6 @@ app.post("/api/login", loginLimiter, async (req, res) => {
     if (!ok) return res.status(401).json({ error: "Login inválido" });
 
     const token = jwt.sign({ id: user._id, username: user.username, name: user.name, role: user.role }, JWT_SECRET, { expiresIn: "7d" });
-
     return res.json({ token, role: user.role, username: user.username, name: user.name });
   } catch {
     return res.status(500).json({ error: "Erro ao entrar" });
@@ -239,13 +231,13 @@ app.post("/api/forgot-password", async (req, res) => {
 
 app.get("/api/products", async (req, res) => {
   const storeOpen = await getStoreOpen();
-  const products = await Product.find({ active: true }).sort({ offer: -1, createdAt: -1 });
+  const products = await Product.find({ active: true }).sort({ offer: -1, createdAt: -1 }).lean();
   return res.json({ products, storeOpen });
 });
 
 app.get("/api/public-offers", async (req, res) => {
   const storeOpen = await getStoreOpen();
-  const products = await Product.find({ active: true, offer: true }).sort({ createdAt: -1 });
+  const products = await Product.find({ active: true, offer: true }).sort({ createdAt: -1 }).lean();
   return res.json({ products, storeOpen });
 });
 
@@ -253,8 +245,7 @@ app.get("/api/admin/stats", auth, adminOnly, async (req, res) => {
   const storeOpen = await getStoreOpen();
   const totalProducts = await Product.countDocuments();
   const totalUsers = await User.countDocuments();
-
-  const products = await Product.find();
+  const products = await Product.find().lean();
   const totalClicks = products.reduce((s, p) => s + (p.clicks || 0), 0);
   const best = [...products].sort((a, b) => (b.clicks || 0) - (a.clicks || 0))[0] || null;
 
@@ -279,7 +270,6 @@ app.post("/api/products", auth, adminOnly, async (req, res) => {
     if (!name || !price || !image || !link) return res.status(400).json({ error: "Preencha nome, preço, imagem e link" });
 
     await Product.create({ name, price, image, link, category, offer, active: true, clicks: 0 });
-
     return res.json({ ok: true });
   } catch {
     return res.status(500).json({ error: "Erro ao adicionar produto" });
@@ -309,4 +299,4 @@ app.post("/api/products/:id/click", async (req, res) => {
 
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
 
-app.listen(PORT, () => console.log(`IsaiasStore com MongoDB rodando na porta ${PORT}`));
+app.listen(PORT, () => console.log(`IsaiasStore completo rodando na porta ${PORT}`));
