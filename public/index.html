@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>IsaiasStore 🔥</title>
 
+        <style>
+            body {
+                  margin: 0;
+                        font-family: Arial;
+                              background: #0f0f0f;
+                                    color: white;
+                                          text-align: center;
+                                              }
+
+                                                  header {
+                                                        background: #ff3c3c;
+                                                              padding: 15px;
+                                                                    font-size: 22px;
+                                                                          font-weight: bold;
+                                                                              }
+
+                                                                                  .container {
+                                                                                        padding: 20px;
+                                                                                            }
+
+                                                                                                .product {
+                                                                                                      background: #1a1a1a;
+                                                                                                            margin: 10px;
+                                                                                                                  padding: 10px;
+                                                                                                                        border-radius: 10px;
+                                                                                                                            }
+
+                                                                                                                                .product img {
+                                                                                                                                      width: 100%;
+                                                                                                                                            border-radius: 10px;
+                                                                                                                                                }
+
+                                                                                                                                                    button {
+                                                                                                                                                          background: #ff3c3c;
+                                                                                                                                                                border: none;
+                                                                                                                                                                      padding: 10px;
+                                                                                                                                                                            color: white;
+                                                                                                                                                                                  border-radius: 5px;
+                                                                                                                                                                                        cursor: pointer;
+                                                                                                                                                                                              margin-top: 5px;
+                                                                                                                                                                                                  }
+
+                                                                                                                                                                                                      input {
+                                                                                                                                                                                                            padding: 8px;
+                                                                                                                                                                                                                  margin: 5px;
+                                                                                                                                                                                                                        border-radius: 5px;
+                                                                                                                                                                                                                              border: none;
+                                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                                    </style>
+                                                                                                                                                                                                                                    </head>
+
+                                                                                                                                                                                                                                    <body>
+
+                                                                                                                                                                                                                                    <header>🔥 IsaiasStore 🔥</header>
+
+                                                                                                                                                                                                                                    <div class="container">
+
+                                                                                                                                                                                                                                      <h2>Login Admin</h2>
+                                                                                                                                                                                                                                        <input id="user" placeholder="Usuário">
+                                                                                                                                                                                                                                          <input id="pass" type="password" placeholder="Senha">
+                                                                                                                                                                                                                                            <br>
+                                                                                                                                                                                                                                              <button onclick="login()">Entrar</button>
+
+                                                                                                                                                                                                                                                <h2>Produtos</h2>
+                                                                                                                                                                                                                                                  <div id="products"></div>
+
+                                                                                                                                                                                                                                                  </div>
+
+                                                                                                                                                                                                                                                  <script>
+                                                                                                                                                                                                                                                  let token = "";
+
+                                                                                                                                                                                                                                                  async function login() {
+                                                                                                                                                                                                                                                    const username = document.getElementById("user").value;
+                                                                                                                                                                                                                                                      const password = document.getElementById("pass").value;
+
+                                                                                                                                                                                                                                                        const res = await fetch("/api/login", {
+                                                                                                                                                                                                                                                            method: "POST",
+                                                                                                                                                                                                                                                                headers: {"Content-Type":"application/json"},
+                                                                                                                                                                                                                                                                    body: JSON.stringify({username, password})
+                                                                                                                                                                                                                                                                      });
+
+                                                                                                                                                                                                                                                                        const data = await res.json();
+
+                                                                                                                                                                                                                                                                          if (data.token) {
+                                                                                                                                                                                                                                                                              token = data.token;
+                                                                                                                                                                                                                                                                                  alert("Login admin OK 🔥");
+                                                                                                                                                                                                                                                                                    } else {
+                                                                                                                                                                                                                                                                                        alert("Erro no login");
+                                                                                                                                                                                                                                                                                          }
+                                                                                                                                                                                                                                                                                          }
+
+                                                                                                                                                                                                                                                                                          async function loadProducts() {
+                                                                                                                                                                                                                                                                                            const res = await fetch("/api/products");
+                                                                                                                                                                                                                                                                                              const data = await res.json();
+
+                                                                                                                                                                                                                                                                                                const div = document.getElementById("products");
+                                                                                                                                                                                                                                                                                                  div.innerHTML = "";
+
+                                                                                                                                                                                                                                                                                                    data.products.forEach(p => {
+                                                                                                                                                                                                                                                                                                        div.innerHTML += `
+                                                                                                                                                                                                                                                                                                              <div class="product">
+                                                                                                                                                                                                                                                                                                                      <img src="${p.image}">
+                                                                                                                                                                                                                                                                                                                              <h3>${p.name}</h3>
+                                                                                                                                                                                                                                                                                                                                      <p>R$ ${p.price}</p>
+                                                                                                                                                                                                                                                                                                                                              <button onclick="buy(${p.id})">Comprar</button>
+                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                        `;
+                                                                                                                                                                                                                                                                                                                                                          });
+                                                                                                                                                                                                                                                                                                                                                          }
+
+                                                                                                                                                                                                                                                                                                                                                          async function buy(id) {
+                                                                                                                                                                                                                                                                                                                                                            const res = await fetch(`/api/products/${id}/click`, {method:"POST"});
+                                                                                                                                                                                                                                                                                                                                                              const data = await res.json();
+                                                                                                                                                                                                                                                                                                                                                                window.open(data.link, "_blank");
+                                                                                                                                                                                                                                                                                                                                                                }
+
+                                                                                                                                                                                                                                                                                                                                                                loadProducts();
+                                                                                                                                                                                                                                                                                                                                                                </script>
+
+                                                                                                                                                                                                                                                                                                                                                                </body>
+                                                                                                                                                                                                                                                                                                                                                                </html>
