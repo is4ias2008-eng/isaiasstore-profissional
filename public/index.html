@@ -1,351 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IsaiasStore</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IsaiasStore V4</title>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial, sans-serif;background:#0f0f0f;color:white}
-header{background:#ff3c3c;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 4px 20px rgba(0,0,0,.35)}
-.brand{display:flex;align-items:center;gap:8px;cursor:pointer}
-.brand img{width:54px;height:54px;object-fit:contain;border-radius:10px;background:#111}
-.brand span{font-size:22px;font-weight:900}
-.menu-btn{position:relative;background:#111;color:#fff;border:0;border-radius:14px;padding:10px 14px;font-size:22px}
-.cart-count{position:absolute;top:-6px;right:-6px;background:#22c55e;color:#fff;border-radius:999px;min-width:22px;height:22px;font-size:12px;font-weight:bold;display:flex;align-items:center;justify-content:center}
-.sidebar{position:fixed;left:-285px;top:0;width:275px;height:100%;background:#181818;z-index:50;padding:20px;transition:.25s;box-shadow:0 0 20px #000}
-.sidebar.open{left:0}
-.sidebar h2{color:#ff7a00}
-.sidebar button{display:block;width:100%;margin:8px 0;background:#292929;color:white;border:0;border-radius:10px;padding:13px;text-align:left;font-weight:bold}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:40}
-.overlay.open{display:block}
-.container{padding:18px;max-width:1050px;margin:auto}
-.hero{background:linear-gradient(135deg,#ff3c3c,#ff8800);border-radius:22px;padding:26px;margin-bottom:18px;box-shadow:0 12px 40px rgba(255,60,60,.2)}
-.hero-logo{width:100%;max-width:360px;display:block;margin:0 auto 12px auto;border-radius:18px;background:#050505}
-.card{background:#1a1a1a;border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 0 0 1px #242424}
-input,select{width:100%;padding:13px;margin:6px 0;border-radius:12px;border:0}
-button.primary{background:#ff3c3c;color:white;border:0;border-radius:12px;padding:13px 17px;font-weight:bold}
-button.secondary{background:#2d2d2d;color:white;border:0;border-radius:12px;padding:13px 17px;font-weight:bold}
-button.link{background:transparent;color:#ffb3b3;border:0;padding:8px 0;font-weight:bold;text-decoration:underline}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-.product img{width:100%;height:210px;object-fit:cover;border-radius:14px}
-.price{color:#ff7a00;font-size:24px;font-weight:bold}
-.hidden{display:none}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
-.stat{background:#222;border-radius:14px;padding:16px}
-.stat b{font-size:26px;color:#ff7a00}
-.tag{display:inline-block;background:#ff3c3c;padding:5px 8px;border-radius:999px;font-size:12px;font-weight:bold}
-.cart-item{display:flex;gap:12px;align-items:center;border-bottom:1px solid #333;padding:12px 0}
-.cart-item img{width:75px;height:75px;object-fit:cover;border-radius:12px}
-.tabs{display:flex;gap:8px;margin-bottom:12px}
-.tabs button{flex:1}
-.small{font-size:13px;color:#bbb}
-.toast{position:fixed;top:84px;left:50%;transform:translateX(-50%) translateY(-20px);background:#22c55e;color:#fff;padding:13px 18px;border-radius:14px;font-weight:bold;z-index:100;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:90%;text-align:center}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.cart-drawer{position:fixed;right:-100%;top:0;width:92%;max-width:420px;height:100%;background:#151515;z-index:60;transition:.25s;padding:18px;box-shadow:0 0 30px #000;overflow:auto}
-.cart-drawer.open{right:0}
-.drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.empty-cart{text-align:center;padding:25px;background:#202020;border-radius:18px}
-.checkout-bar{position:sticky;bottom:0;background:#151515;padding:12px 0}
-.auth-logo{width:170px;display:block;margin:0 auto 10px auto;border-radius:15px}
-.auth-title{text-align:center;margin-top:0}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#0e0e0f;color:white}header{background:#ff3c3c;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 4px 20px rgba(0,0,0,.35)}.brand{display:flex;align-items:center;gap:8px;cursor:pointer}.brand img{width:54px;height:54px;object-fit:contain;border-radius:10px;background:#111}.brand span{font-size:22px;font-weight:900}.menu-btn{position:relative;background:#111;color:#fff;border:0;border-radius:14px;padding:10px 14px;font-size:22px}.cart-count{position:absolute;top:-6px;right:-6px;background:#22c55e;color:#fff;border-radius:999px;min-width:22px;height:22px;font-size:12px;font-weight:bold;display:flex;align-items:center;justify-content:center}.sidebar{position:fixed;left:-295px;top:0;width:285px;height:100%;background:#181818;z-index:50;padding:20px;transition:.25s;box-shadow:0 0 20px #000;overflow:auto}.sidebar.open{left:0}.sidebar h2{color:#ff7a00}.sidebar button{display:block;width:100%;margin:8px 0;background:#292929;color:white;border:0;border-radius:10px;padding:13px;text-align:left;font-weight:bold}.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:40}.overlay.open{display:block}.container{padding:18px;max-width:1120px;margin:auto}.hero{background:linear-gradient(135deg,#ff3c3c,#ff8800);border-radius:24px;padding:26px;margin-bottom:18px;box-shadow:0 12px 40px rgba(255,60,60,.2)}.hero-logo{width:100%;max-width:360px;display:block;margin:0 auto 12px auto;border-radius:18px;background:#050505}.card{background:#1a1a1a;border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 0 0 1px #242424}input,select,textarea{width:100%;padding:13px;margin:6px 0;border-radius:12px;border:0}button.primary{background:#ff3c3c;color:white;border:0;border-radius:12px;padding:13px 17px;font-weight:bold}button.secondary{background:#2d2d2d;color:white;border:0;border-radius:12px;padding:13px 17px;font-weight:bold}button.gold{background:#ff7a00;color:white;border:0;border-radius:12px;padding:13px 17px;font-weight:bold}button.link{background:transparent;color:#ffb3b3;border:0;padding:8px 0;font-weight:bold;text-decoration:underline}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:14px}.product img{width:100%;height:210px;object-fit:cover;border-radius:14px}.price{color:#ff7a00;font-size:24px;font-weight:bold}.hidden{display:none}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.stat{background:#222;border-radius:14px;padding:16px}.stat b{font-size:28px;color:#ff7a00}.tag{display:inline-block;background:#ff3c3c;padding:5px 8px;border-radius:999px;font-size:12px;font-weight:bold}.cart-item{display:flex;gap:12px;align-items:center;border-bottom:1px solid #333;padding:12px 0}.cart-item img{width:75px;height:75px;object-fit:cover;border-radius:12px}.tabs{display:flex;gap:8px;margin-bottom:12px}.tabs button{flex:1}.small{font-size:13px;color:#bbb}.toast{position:fixed;top:84px;left:50%;transform:translateX(-50%) translateY(-20px);background:#22c55e;color:#fff;padding:13px 18px;border-radius:14px;font-weight:bold;z-index:100;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:90%;text-align:center}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.cart-drawer{position:fixed;right:-100%;top:0;width:92%;max-width:430px;height:100%;background:#151515;z-index:60;transition:.25s;padding:18px;box-shadow:0 0 30px #000;overflow:auto}.cart-drawer.open{right:0}.drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.empty-cart{text-align:center;padding:25px;background:#202020;border-radius:18px}.checkout-bar{position:sticky;bottom:0;background:#151515;padding:12px 0}.auth-logo{width:170px;display:block;margin:0 auto 10px auto;border-radius:15px}.auth-title{text-align:center;margin-top:0}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}.row{display:flex;gap:8px;flex-wrap:wrap}.table-card{background:#202020;border-radius:14px;padding:12px;margin:8px 0}.notice{background:#201513;border:1px solid #ff7a00;border-radius:14px;padding:12px;margin:10px 0;color:#ffd9bd}
 </style>
 </head>
 <body>
-<header>
-  <button class="menu-btn" onclick="toggleMenu()">☰</button>
-  <div class="brand" onclick="brandClick()">
-    <img src="/logo.png" alt="IsaiasStore">
-    <span>IsaiasStore</span>
-  </div>
-  <button class="menu-btn" onclick="openCart()">🛒<span id="cartCount" class="cart-count hidden">0</span></button>
-</header>
-
-<div id="toast" class="toast"></div>
-<div id="overlay" class="overlay" onclick="closeAllPanels()"></div>
-<aside id="sidebar" class="sidebar"><h2>Menu</h2><div id="menuItems"></div></aside>
-
-<aside id="cartDrawer" class="cart-drawer">
-  <div class="drawer-head">
-    <h2>Meu carrinho 🛒</h2>
-    <button class="secondary" onclick="closeAllPanels()">Fechar</button>
-  </div>
-  <div id="cartItems"></div>
-  <div class="checkout-bar"><button class="primary" style="width:100%" onclick="checkoutShopee()">Finalizar compra</button></div>
-</aside>
-
+<header><button class="menu-btn" onclick="toggleMenu()">☰</button><div class="brand" onclick="brandClick()"><img src="/logo.png" alt="IsaiasStore"><span>IsaiasStore</span></div><button class="menu-btn" onclick="openCart()">🛒<span id="cartCount" class="cart-count hidden">0</span></button></header>
+<div id="toast" class="toast"></div><div id="overlay" class="overlay" onclick="closeAllPanels()"></div><aside id="sidebar" class="sidebar"><h2>Menu</h2><div id="menuItems"></div></aside>
+<aside id="cartDrawer" class="cart-drawer"><div class="drawer-head"><h2>Meu carrinho 🛒</h2><button class="secondary" onclick="closeAllPanels()">Fechar</button></div><div id="cartItems"></div><div class="checkout-bar"><button class="primary" style="width:100%" onclick="checkoutShopee()">Finalizar compra</button></div></aside>
 <div class="container">
-<section id="homePage">
-  <section class="hero">
-    <img class="hero-logo" src="/logo.png" alt="IsaiasStore">
-    <h2>Ofertas liberadas para todos 🔥</h2>
-    <p>Sem conta você vê apenas produtos em promoção. Para ver todos os produtos, crie sua conta.</p>
-    <button class="primary" onclick="go('login')">Entrar / Criar conta</button>
-  </section>
-  <h2>Promoções abertas ao público</h2>
-  <div id="publicOffers" class="grid"></div>
-</section>
-
-<section id="loginPage" class="hidden card">
-  <img class="auth-logo" src="/logo.png" alt="IsaiasStore">
-  <h2 class="auth-title">Acesse sua conta</h2>
-
-  <div class="tabs">
-    <button id="tabLogin" class="primary" onclick="showLogin()">Entrar</button>
-    <button id="tabRegister" class="secondary" onclick="showRegister()">Criar conta</button>
-  </div>
-
-  <div id="g_id_onload"
-    data-client_id="660996534145-e2q8aq49f9ch1ll9i2u3chijkqplgb5g.apps.googleusercontent.com"
-    data-callback="handleGoogleCredential"
-    data-auto_prompt="false">
-  </div>
-  <div class="g_id_signin"
-    data-type="standard"
-    data-size="large"
-    data-theme="outline"
-    data-text="continue_with"
-    data-shape="rectangular"
-    data-logo_alignment="left">
-  </div>
-
-  <p class="small">Entre com Google ou crie sua conta para acessar todos os produtos.</p>
-
-  <div id="loginBox">
-    <h3>Entrar</h3>
-    <input id="loginUser" placeholder="Usuário">
-    <input id="loginPass" type="password" placeholder="Senha">
-    <button class="primary" onclick="login()">Entrar</button>
-    <br>
-    <button class="link" onclick="showForgot()">Esqueci minha senha</button>
-  </div>
-
-  <div id="registerBox" class="hidden">
-    <h3>Criar conta</h3>
-    <input id="regName" placeholder="Nome completo">
-    <input id="regUser" placeholder="Usuário">
-    <input id="regPass" type="password" placeholder="Criar senha">
-    <input id="regConfirm" type="password" placeholder="Confirmar senha">
-    <button class="primary" onclick="register()">Criar conta</button>
-    <p class="small">Sua senha precisa ter pelo menos 6 caracteres.</p>
-  </div>
-
-  <div id="forgotBox" class="hidden">
-    <h3>Recuperar senha</h3>
-    <p class="small">Digite seu usuário. Se a conta existir, mostraremos uma confirmação segura.</p>
-    <input id="forgotUser" placeholder="Seu usuário">
-    <button class="primary" onclick="forgotPassword()">Enviar instruções</button>
-    <br>
-    <button class="link" onclick="showLogin()">Voltar para login</button>
-  </div>
-</section>
-
-<section id="shopPage" class="hidden">
-  <section class="hero">
-    <img class="hero-logo" src="/logo.png" alt="IsaiasStore">
-    <h2>Produtos completos da IsaiasStore 🛍️</h2>
-    <p>Escolha por categoria e finalize pelo link da Shopee.</p>
-  </section>
-  <div id="categoryButtons" class="card"></div>
-  <div id="products" class="grid"></div>
-</section>
-
-<section id="adminPage" class="hidden">
-  <div class="card">
-    <h2>Painel Admin 👑</h2>
-    <div class="stats">
-      <div class="stat"><p>Cliques totais</p><b id="statClicks">0</b></div>
-      <div class="stat"><p>Produtos</p><b id="statProducts">0</b></div>
-      <div class="stat"><p>Usuários</p><b id="statUsers">0</b></div>
-      <div class="stat"><p>Loja</p><b id="statStore">-</b></div>
-    </div>
-    <p id="bestProduct"></p>
-    <button class="secondary" onclick="toggleStore()">Abrir/Fechar loja</button>
-  </div>
-
-  <div class="card">
-    <h2>Adicionar produto</h2>
-    <input id="pName" placeholder="Nome do produto">
-    <input id="pPrice" placeholder="Preço. Ex: 29,90">
-    <input id="pImage" placeholder="URL da imagem">
-    <input id="pLink" placeholder="Link afiliado Shopee">
-    <select id="pCategory">
-      <option>Promoções</option>
-      <option>Casa</option>
-      <option>Esportivo</option>
-      <option>Eletrônicos</option>
-      <option>Moda</option>
-      <option>Beleza</option>
-      <option>Acessórios</option>
-    </select>
-    <label><input id="pOffer" type="checkbox"> Mostrar como promoção pública</label><br><br>
-    <button class="primary" onclick="addProduct()">Adicionar</button>
-  </div>
-</section>
+<section id="homePage"><section class="hero"><img class="hero-logo" src="/logo.png" alt="IsaiasStore"><h2>Ofertas liberadas para todos</h2><p>Sem conta você vê apenas produtos em promoção. Para ver todos os produtos, crie sua conta.</p><button class="primary" onclick="go('login')">Entrar / Criar conta</button></section><h2>Promoções abertas ao público</h2><div id="publicOffers" class="grid"></div></section>
+<section id="loginPage" class="hidden card"><img class="auth-logo" src="/logo.png" alt="IsaiasStore"><h2 class="auth-title">Acesse sua conta</h2><div class="tabs"><button id="tabLogin" class="primary" onclick="showLogin()">Entrar</button><button id="tabRegister" class="secondary" onclick="showRegister()">Criar conta</button></div><div id="g_id_onload" data-client_id="660996534145-e2q8aq49f9ch1ll9i2u3chijkqplgb5g.apps.googleusercontent.com" data-callback="handleGoogleCredential" data-auto_prompt="false"></div><div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="continue_with" data-shape="rectangular" data-logo_alignment="left"></div><p class="small">Entre com Google ou crie sua conta para acessar todos os produtos.</p><div id="loginBox"><h3>Entrar</h3><input id="loginUser" placeholder="Usuário"><input id="loginPass" type="password" placeholder="Senha"><button class="primary" onclick="login()">Entrar</button><br><button class="link" onclick="showForgot()">Esqueci minha senha</button></div><div id="registerBox" class="hidden"><h3>Criar conta</h3><input id="regName" placeholder="Nome completo"><input id="regUser" placeholder="Usuário"><input id="regPass" type="password" placeholder="Criar senha"><input id="regConfirm" type="password" placeholder="Confirmar senha"><button class="primary" onclick="register()">Criar conta</button><p class="small">Sua senha precisa ter pelo menos 6 caracteres.</p></div><div id="forgotBox" class="hidden"><h3>Recuperar senha</h3><input id="forgotUser" placeholder="Seu usuário"><button class="primary" onclick="forgotPassword()">Enviar instruções</button><br><button class="link" onclick="showLogin()">Voltar para login</button></div></section>
+<section id="shopPage" class="hidden"><section class="hero"><img class="hero-logo" src="/logo.png" alt="IsaiasStore"><h2>Produtos completos da IsaiasStore</h2><p>Escolha por categoria e finalize pelo link da Shopee.</p><div class="notice">Pagamento atual: direto na Shopee pelo link afiliado. Estrutura futura de Pix/cartão já está preparada para expansão.</div></section><div id="categoryButtons" class="card"></div><div id="products" class="grid"></div></section>
+<section id="adminPage" class="hidden"><div class="card"><h2>Dashboard Admin 👑</h2><div class="stats"><div class="stat"><p>Cliques</p><b id="statClicks">0</b></div><div class="stat"><p>Produtos</p><b id="statProducts">0</b></div><div class="stat"><p>Usuários</p><b id="statUsers">0</b></div><div class="stat"><p>Loja</p><b id="statStore">-</b></div></div><div class="row"><button class="secondary" onclick="toggleStore()">Abrir/Fechar loja</button><button class="gold" onclick="go('shop')">Ver loja</button></div></div><div class="admin-grid"><div class="card"><h2>Adicionar / Editar produto</h2><input id="editingId" type="hidden"><input id="pName" placeholder="Nome do produto"><input id="pPrice" placeholder="Preço. Ex: 29,90"><input id="pImage" placeholder="URL da imagem"><input id="pLink" placeholder="Link afiliado Shopee"><select id="pCategory"></select><label><input id="pOffer" type="checkbox"> Mostrar como promoção pública</label><br><br><button class="primary" onclick="saveProduct()">Salvar produto</button><button class="secondary" onclick="clearProductForm()">Limpar</button></div><div class="card"><h2>Categorias</h2><textarea id="categoriesText" rows="6" placeholder="Uma categoria por linha"></textarea><button class="primary" onclick="saveCategories()">Salvar categorias</button></div></div><div class="card"><h2>Mais clicados</h2><div id="topProducts"></div></div><div class="card"><h2>Últimos cliques/redirecionamentos</h2><div id="recentClicks"></div></div></section>
 </div>
-
 <script>
-let token=localStorage.getItem("token")||"";
-let role=localStorage.getItem("role")||"";
-let currentCategory="Todos", productsCache=[], publicCache=[], storeOpenCache=true;
-let cart=JSON.parse(localStorage.getItem("cart")||"[]");
-
-function getId(p){return p._id || p.id}
-function toastMsg(msg,type="ok"){toast.innerText=msg;toast.style.background=type==="error"?"#ef4444":"#22c55e";toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),2200)}
-function adminMessage(msg){if(role==="admin")toastMsg(msg)}
-function updateCartCount(){if(cart.length>0){cartCount.innerText=cart.length;cartCount.classList.remove("hidden")}else cartCount.classList.add("hidden")}
-function toggleMenu(){sidebar.classList.toggle("open");overlay.classList.toggle("open")}
-function openCart(){renderCart();cartDrawer.classList.add("open");overlay.classList.add("open")}
-function closeAllPanels(){sidebar.classList.remove("open");cartDrawer.classList.remove("open");overlay.classList.remove("open")}
-function hideAll(){["homePage","loginPage","shopPage","adminPage"].forEach(id=>document.getElementById(id).classList.add("hidden"))}
-
-function brandClick(){
-  if(role==="admin") go("admin");
-  else if(token) go("shop");
-  else go("home");
-}
-
-function go(page){
-  hideAll();
-  closeAllPanels();
-  if(page==="home") homePage.classList.remove("hidden");
-  if(page==="login") loginPage.classList.remove("hidden");
-  if(page==="shop"){ shopPage.classList.remove("hidden"); loadProducts(); }
-  if(page==="cart") openCart();
-  if(page==="admin"){ adminPage.classList.remove("hidden"); loadAdmin(); }
-}
-
-function renderMenu(){
-  if(role==="admin"){
-    menuItems.innerHTML=`<button onclick="go('admin')">👑 Painel Admin</button><button onclick="go('shop')">🛍️ Todos os produtos</button><button onclick="openCart()">🛒 Carrinho</button><button onclick="setCategory('Promoções')">🔥 Promoções</button><button onclick="setCategory('Casa')">🏠 Casa</button><button onclick="setCategory('Esportivo')">⚽ Esportivo</button><button onclick="setCategory('Eletrônicos')">📱 Eletrônicos</button><button onclick="logout()">Sair</button>`
-  } else if(token){
-    menuItems.innerHTML=`<button onclick="go('shop')">🛍️ Todos os produtos</button><button onclick="openCart()">🛒 Carrinho</button><button onclick="setCategory('Promoções')">🔥 Promoções</button><button onclick="setCategory('Casa')">🏠 Casa</button><button onclick="setCategory('Esportivo')">⚽ Esportivo</button><button onclick="setCategory('Eletrônicos')">📱 Eletrônicos</button><button onclick="setCategory('Moda')">👕 Moda</button><button onclick="logout()">Sair</button>`
-  } else {
-    menuItems.innerHTML=`<button onclick="go('home')">🔥 Promoções públicas</button><button onclick="go('login')">Entrar / Criar conta</button><button onclick="openCart()">🛒 Carrinho</button>`
-  }
-}
-
-function showLogin(){loginBox.classList.remove("hidden");registerBox.classList.add("hidden");forgotBox.classList.add("hidden");tabLogin.className="primary";tabRegister.className="secondary"}
-function showRegister(){registerBox.classList.remove("hidden");loginBox.classList.add("hidden");forgotBox.classList.add("hidden");tabRegister.className="primary";tabLogin.className="secondary"}
-function showForgot(){forgotBox.classList.remove("hidden");loginBox.classList.add("hidden");registerBox.classList.add("hidden");tabLogin.className="secondary";tabRegister.className="secondary"}
-
-async function handleGoogleCredential(response){
-  try{
-    const r=await fetch("/api/google-login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({credential:response.credential})});
-    const d=await r.json();
-    if(d.token){token=d.token;role=d.role;localStorage.setItem("token",token);localStorage.setItem("role",role);renderMenu();toastMsg("Login com Google concluído ✅");go("shop")}
-    else toastMsg(d.error||"Não foi possível entrar com Google.","error")
-  }catch(e){toastMsg("Não foi possível entrar com Google. Tente novamente.","error")}
-}
-
-async function register(){
-  const name=regName.value.trim(),username=regUser.value.trim(),password=regPass.value,confirmPassword=regConfirm.value;
-  const r=await fetch("/api/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,username,password,confirmPassword})});
-  const d=await r.json();
-  if(d.ok){toastMsg("Conta criada! Entrando agora ✅");loginUser.value=username;loginPass.value=password;await login()}
-  else toastMsg(d.error,"error")
-}
-
-async function login(){
-  const username=loginUser.value.trim(),password=loginPass.value;
-  const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,password})});
-  const d=await r.json();
-  if(d.token){
-    token=d.token;role=d.role;
-    localStorage.setItem("token",token);
-    localStorage.setItem("role",role);
-    renderMenu();
-    toastMsg(role==="admin"?"Bem-vindo, admin 👑":"Login realizado ✅");
-    go(role==="admin"?"admin":"shop");
-  } else toastMsg(d.error||"Login não autorizado.","error")
-}
-
-async function forgotPassword(){
-  const username=forgotUser.value.trim();
-  const r=await fetch("/api/forgot-password",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username})});
-  const d=await r.json();
-  toastMsg(d.message || "Se a conta existir, enviaremos instruções.");
-  showLogin();
-}
-
-function logout(){localStorage.removeItem("token");localStorage.removeItem("role");token="";role="";renderMenu();toastMsg("Você saiu da conta");go("home")}
-
-async function loadPublic(){
-  try{
-    const r=await fetch("/api/public-offers");
-    const d=await r.json();
-    publicCache=d.products||[];
-    storeOpenCache=d.storeOpen;
-    publicOffers.innerHTML=publicCache.map(cardPublic).join("")||"<div class='card'>Nenhuma promoção pública agora.</div>";
-  }catch(e){toastMsg("Erro ao carregar promoções.","error")}
-}
-
-async function loadProducts(){
-  try{
-    const r=await fetch("/api/products");
-    const d=await r.json();
-    productsCache=d.products||[];
-    storeOpenCache=d.storeOpen;
-    renderProducts();
-  }catch(e){role==="admin"?adminMessage("Erro técnico ao carregar produtos."):toastMsg("Erro ao carregar produtos.","error")}
-}
-
-function categories(){return["Todos","Promoções","Casa","Esportivo","Eletrônicos","Moda","Beleza","Acessórios"]}
-function renderCategories(){categoryButtons.innerHTML=categories().map(c=>`<button class="${c===currentCategory?'primary':'secondary'}" onclick="setCategory('${c}')">${c}</button>`).join(" ")}
-function setCategory(c){currentCategory=c;go("shop");renderCategories();renderProducts()}
-
-function cardPublic(p){
-  const id=getId(p);
-  return `<div class="card product">${p.offer?'<span class="tag">PROMOÇÃO 🔥</span>':''}<img src="${p.image}"><h3>${p.name}</h3><p class="price">R$ ${p.price}</p><button class="primary" onclick="addToCart('${id}')">Adicionar ao carrinho</button><button class="secondary" onclick="buy('${id}')">Ver na Shopee</button></div>`
-}
-
-function renderProducts(){
-  renderCategories();
-  if(!storeOpenCache){products.innerHTML="<div class='card'>Loja fechada no momento.</div>";return}
-  let list=productsCache.filter(p=>currentCategory==="Todos"||p.category===currentCategory);
-  products.innerHTML=list.map(p=>{
-    const id=getId(p);
-    return `<div class="card product">${p.offer?'<span class="tag">OFERTA 🔥</span>':''}<img src="${p.image}"><h3>${p.name}</h3><p>${p.category}</p><p class="price">R$ ${p.price}</p><button class="primary" onclick="addToCart('${id}')">Adicionar ao carrinho</button><button class="secondary" onclick="buy('${id}')">Ver na Shopee</button>${role==="admin"?`<p>Cliques: ${p.clicks||0}</p><button class="secondary" onclick="deleteProduct('${id}')">Excluir</button>`:""}</div>`
-  }).join("")||"<div class='card'>Nenhum produto nessa categoria.</div>"
-}
-
-function findProduct(id){return[...productsCache,...publicCache].find(p=>String(getId(p))===String(id))}
-function addToCart(id){const p=findProduct(id);if(!p)return;cart.push(p);localStorage.setItem("cart",JSON.stringify(cart));updateCartCount();toastMsg("Produto adicionado ao carrinho 🛒")}
-function renderCart(){
-  updateCartCount();
-  if(!cart.length){cartItems.innerHTML="<div class='empty-cart'><h3>Seu carrinho está vazio 🛒</h3><p>Adicione produtos e volte aqui para finalizar.</p></div>";return}
-  cartItems.innerHTML=cart.map((p,i)=>`<div class="cart-item"><img src="${p.image}"><div><b>${p.name}</b><p>R$ ${p.price}</p><button class="secondary" onclick="removeCart(${i})">Remover</button></div></div>`).join("")
-}
-function removeCart(i){cart.splice(i,1);localStorage.setItem("cart",JSON.stringify(cart));renderCart();toastMsg("Produto removido do carrinho")}
-async function checkoutShopee(){if(!cart.length){toastMsg("Seu carrinho está vazio 🛒","error");return}toastMsg("Abrindo produtos na Shopee...");for(const p of cart){await buy(getId(p))}}
-async function buy(id){const r=await fetch(`/api/products/${id}/click`,{method:"POST"});const d=await r.json();if(d.link)window.open(d.link,"_blank");loadProducts();loadPublic()}
-
-async function loadAdmin(){
-  if(role!=="admin")return;
-  try{
-    const r=await fetch("/api/admin/stats",{headers:{Authorization:"Bearer "+token}});
-    const d=await r.json();
-    statClicks.innerText=d.totalClicks||0;
-    statProducts.innerText=d.totalProducts||0;
-    statUsers.innerText=d.totalUsers||0;
-    statStore.innerText=d.storeOpen?"Aberta":"Fechada";
-    bestProduct.innerText=d.bestProduct?`Mais clicado: ${d.bestProduct.name} (${d.bestProduct.clicks} cliques)`:"";
-  }catch(e){adminMessage("Erro técnico no painel admin.")}
-}
-
-async function addProduct(){
-  const body={name:pName.value,price:pPrice.value,image:pImage.value,link:pLink.value,category:pCategory.value,offer:pOffer.checked};
-  const r=await fetch("/api/products",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},body:JSON.stringify(body)});
-  const d=await r.json();
-  role==="admin"?adminMessage(d.ok?"Produto adicionado!":d.error):toastMsg("Ação não permitida.","error");
-  pName.value="";pPrice.value="";pImage.value="";pLink.value="";
-  loadProducts();loadAdmin();
-}
-
-async function deleteProduct(id){if(!confirm("Excluir produto?"))return;await fetch(`/api/products/${id}`,{method:"DELETE",headers:{Authorization:"Bearer "+token}});loadProducts();loadAdmin();toastMsg("Produto excluído")}
-async function toggleStore(){await fetch("/api/admin/store-open",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},body:JSON.stringify({open:!storeOpenCache})});loadProducts();loadAdmin();toastMsg("Status da loja atualizado")}
-
+let token=localStorage.getItem("token")||"",role=localStorage.getItem("role")||"",currentCategory="Todos",productsCache=[],publicCache=[],storeOpenCache=true,categoriesCache=["Casa","Eletrônicos","Esportes","Moda","Ofertas"],cart=JSON.parse(localStorage.getItem("cart")||"[]");
+function getId(p){return p._id||p.id}function toastMsg(msg,type="ok"){toast.innerText=msg;toast.style.background=type==="error"?"#ef4444":"#22c55e";toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),2300)}function updateCartCount(){if(cart.length>0){cartCount.innerText=cart.length;cartCount.classList.remove("hidden")}else cartCount.classList.add("hidden")}function toggleMenu(){sidebar.classList.toggle("open");overlay.classList.toggle("open")}function openCart(){renderCart();cartDrawer.classList.add("open");overlay.classList.add("open")}function closeAllPanels(){sidebar.classList.remove("open");cartDrawer.classList.remove("open");overlay.classList.remove("open")}function hideAll(){["homePage","loginPage","shopPage","adminPage"].forEach(id=>document.getElementById(id).classList.add("hidden"))}function brandClick(){role==="admin"?go("admin"):token?go("shop"):go("home")}function requireAdmin(){if(role!=="admin"||!token){toastMsg("Acesso não permitido.","error");go("login");return false}return true}
+function go(page){hideAll();closeAllPanels();if(page==="home")homePage.classList.remove("hidden");if(page==="login")loginPage.classList.remove("hidden");if(page==="shop"){shopPage.classList.remove("hidden");loadProducts()}if(page==="cart")openCart();if(page==="admin"){if(!requireAdmin())return;adminPage.classList.remove("hidden");loadProducts();loadDashboard()}}
+function renderMenu(){if(role==="admin")menuItems.innerHTML=`<button onclick="go('admin')">👑 Dashboard Admin</button><button onclick="go('shop')">🛍️ Loja</button><button onclick="openCart()">🛒 Carrinho</button><button onclick="setCategory('Ofertas')">🔥 Ofertas</button><button onclick="setCategory('Casa')">🏠 Casa</button><button onclick="setCategory('Esportes')">⚽ Esportes</button><button onclick="setCategory('Eletrônicos')">📱 Eletrônicos</button><button onclick="logout()">Sair</button>`;else if(token)menuItems.innerHTML=`<button onclick="go('shop')">🛍️ Todos os produtos</button><button onclick="openCart()">🛒 Carrinho</button><button onclick="setCategory('Ofertas')">🔥 Ofertas</button><button onclick="setCategory('Casa')">🏠 Casa</button><button onclick="setCategory('Esportes')">⚽ Esportes</button><button onclick="setCategory('Eletrônicos')">📱 Eletrônicos</button><button onclick="setCategory('Moda')">👕 Moda</button><button onclick="logout()">Sair</button>`;else menuItems.innerHTML=`<button onclick="go('home')">🔥 Ofertas públicas</button><button onclick="go('login')">Entrar / Criar conta</button><button onclick="openCart()">🛒 Carrinho</button>`}
+function showLogin(){loginBox.classList.remove("hidden");registerBox.classList.add("hidden");forgotBox.classList.add("hidden");tabLogin.className="primary";tabRegister.className="secondary"}function showRegister(){registerBox.classList.remove("hidden");loginBox.classList.add("hidden");forgotBox.classList.add("hidden");tabRegister.className="primary";tabLogin.className="secondary"}function showForgot(){forgotBox.classList.remove("hidden");loginBox.classList.add("hidden");registerBox.classList.add("hidden");tabLogin.className="secondary";tabRegister.className="secondary"}
+async function handleGoogleCredential(response){try{const r=await fetch("/api/google-login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({credential:response.credential})}),d=await r.json();if(d.token){token=d.token;role=d.role;localStorage.setItem("token",token);localStorage.setItem("role",role);renderMenu();toastMsg("Login com Google concluído ✅");go("shop")}else toastMsg(d.error||"Não foi possível entrar com Google.","error")}catch(e){toastMsg("Não foi possível entrar com Google.","error")}}
+async function register(){const r=await fetch("/api/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:regName.value.trim(),username:regUser.value.trim(),password:regPass.value,confirmPassword:regConfirm.value})}),d=await r.json();if(d.ok){toastMsg("Conta criada! Entrando agora ✅");loginUser.value=regUser.value.trim();loginPass.value=regPass.value;await login()}else toastMsg(d.error,"error")}
+async function login(){const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:loginUser.value.trim(),password:loginPass.value})}),d=await r.json();if(d.token){token=d.token;role=d.role;localStorage.setItem("token",token);localStorage.setItem("role",role);renderMenu();toastMsg(role==="admin"?"Bem-vindo, admin 👑":"Login realizado ✅");go(role==="admin"?"admin":"shop")}else toastMsg(d.error||"Login não autorizado.","error")}
+async function forgotPassword(){const r=await fetch("/api/forgot-password",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:forgotUser.value.trim()})}),d=await r.json();toastMsg(d.message||"Se a conta existir, enviaremos instruções.");showLogin()}function logout(){localStorage.removeItem("token");localStorage.removeItem("role");token="";role="";renderMenu();toastMsg("Você saiu da conta");go("home")}
+async function loadPublic(){try{const r=await fetch("/api/public-offers"),d=await r.json();publicCache=d.products||[];storeOpenCache=d.storeOpen;categoriesCache=d.categories||categoriesCache;publicOffers.innerHTML=publicCache.map(cardPublic).join("")||"<div class='card'>Nenhuma oferta pública agora.</div>"}catch(e){toastMsg("Erro ao carregar ofertas.","error")}}
+async function loadProducts(){try{const headers=token?{Authorization:"Bearer "+token}:{},r=await fetch("/api/products",{headers});if(r.status===401){toastMsg("Entre para ver todos os produtos.","error");go("login");return}const d=await r.json();productsCache=d.products||[];storeOpenCache=d.storeOpen;categoriesCache=d.categories||categoriesCache;renderProducts();renderCategorySelects()}catch(e){toastMsg("Erro ao carregar produtos.","error")}}
+function categories(){return["Todos",...categoriesCache]}function renderCategories(){categoryButtons.innerHTML=categories().map(c=>`<button class="${c===currentCategory?'primary':'secondary'}" onclick="setCategory('${c}')">${c}</button>`).join(" ")}function renderCategorySelects(){if(typeof pCategory!="undefined")pCategory.innerHTML=categoriesCache.map(c=>`<option>${c}</option>`).join("");if(typeof categoriesText!="undefined")categoriesText.value=categoriesCache.join("\n")}function setCategory(c){currentCategory=c;go("shop");renderCategories();renderProducts()}
+function cardPublic(p){const id=getId(p);return`<div class="card product">${p.offer?'<span class="tag">OFERTA</span>':''}<img src="${p.image}"><h3>${p.name}</h3><p class="price">R$ ${p.price}</p><button class="primary" onclick="addToCart('${id}')">Adicionar ao carrinho</button><button class="secondary" onclick="buy('${id}')">Ver na Shopee</button></div>`}
+function renderProducts(){renderCategories();if(!storeOpenCache){products.innerHTML="<div class='card'>Loja fechada no momento.</div>";return}let list=productsCache.filter(p=>currentCategory==="Todos"||p.category===currentCategory);products.innerHTML=list.map(p=>{const id=getId(p);return`<div class="card product">${p.offer?'<span class="tag">OFERTA</span>':''}<img src="${p.image}"><h3>${p.name}</h3><p>${p.category}</p><p class="price">R$ ${p.price}</p><button class="primary" onclick="addToCart('${id}')">Adicionar ao carrinho</button><button class="secondary" onclick="buy('${id}')">Ver na Shopee</button>${role==="admin"?`<p>Cliques: ${p.clicks||0}</p><button class="secondary" onclick="editProduct('${id}')">Editar</button> <button class="secondary" onclick="deleteProduct('${id}')">Excluir</button>`:""}</div>`}).join("")||"<div class='card'>Nenhum produto nessa categoria.</div>"}
+function findProduct(id){return[...productsCache,...publicCache].find(p=>String(getId(p))===String(id))}function addToCart(id){const p=findProduct(id);if(!p)return;cart.push(p);localStorage.setItem("cart",JSON.stringify(cart));updateCartCount();toastMsg("Produto adicionado ao carrinho 🛒")}function renderCart(){updateCartCount();if(!cart.length){cartItems.innerHTML="<div class='empty-cart'><h3>Seu carrinho está vazio 🛒</h3><p>Adicione produtos e volte aqui para finalizar.</p></div>";return}cartItems.innerHTML=cart.map((p,i)=>`<div class="cart-item"><img src="${p.image}"><div><b>${p.name}</b><p>R$ ${p.price}</p><button class="secondary" onclick="removeCart(${i})">Remover</button></div></div>`).join("")}function removeCart(i){cart.splice(i,1);localStorage.setItem("cart",JSON.stringify(cart));renderCart();toastMsg("Produto removido")}async function checkoutShopee(){if(!cart.length){toastMsg("Seu carrinho está vazio 🛒","error");return}toastMsg("Abrindo produtos na Shopee...");for(const p of cart)await buy(getId(p))}async function buy(id){const headers=token?{Authorization:"Bearer "+token}:{};const r=await fetch(`/api/products/${id}/click`,{method:"POST",headers}),d=await r.json();if(d.link)window.open(d.link,"_blank");if(token)loadProducts();loadPublic()}
+async function loadDashboard(){if(!requireAdmin())return;try{const r=await fetch("/api/admin/dashboard",{headers:{Authorization:"Bearer "+token}});if(r.status===403||r.status===401){toastMsg("Acesso admin negado.","error");logout();return}const d=await r.json();statClicks.innerText=d.totalClicks||0;statProducts.innerText=d.totalProducts||0;statUsers.innerText=d.totalUsers||0;statStore.innerText=d.storeOpen?"Aberta":"Fechada";categoriesCache=d.categories||categoriesCache;renderCategorySelects();topProducts.innerHTML=(d.topProducts||[]).map(p=>`<div class="table-card"><b>${p.name}</b><br><span>${p.category||""} • ${p.clicks||0} cliques</span></div>`).join("")||"<p>Nenhum clique ainda.</p>";recentClicks.innerHTML=(d.recentClicks||[]).map(c=>`<div class="table-card"><b>${c.productName}</b><br><span>${c.category||""} • ${new Date(c.createdAt).toLocaleString("pt-BR")}</span></div>`).join("")||"<p>Nenhum redirecionamento ainda.</p>"}catch(e){toastMsg("Erro no dashboard.","error")}}
+function editProduct(id){const p=productsCache.find(x=>String(getId(x))===String(id));if(!p)return;editingId.value=id;pName.value=p.name||"";pPrice.value=p.price||"";pImage.value=p.image||"";pLink.value=p.link||"";pCategory.value=p.category||categoriesCache[0];pOffer.checked=!!p.offer;toastMsg("Produto carregado para edição");window.scrollTo({top:0,behavior:"smooth"})}function clearProductForm(){editingId.value="";pName.value="";pPrice.value="";pImage.value="";pLink.value="";pCategory.value=categoriesCache[0]||"Ofertas";pOffer.checked=false}
+async function saveProduct(){if(!requireAdmin())return;const body={name:pName.value,price:pPrice.value,image:pImage.value,link:pLink.value,category:pCategory.value,offer:pOffer.checked,active:true},id=editingId.value,url=id?`/api/products/${id}`:"/api/products",method=id?"PUT":"POST",r=await fetch(url,{method,headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},body:JSON.stringify(body)}),d=await r.json();toastMsg(d.ok?(id?"Produto editado!":"Produto adicionado!"):d.error,d.ok?"ok":"error");clearProductForm();loadProducts();loadDashboard()}async function deleteProduct(id){if(!requireAdmin())return;if(!confirm("Excluir produto?"))return;await fetch(`/api/products/${id}`,{method:"DELETE",headers:{Authorization:"Bearer "+token}});loadProducts();loadDashboard();toastMsg("Produto excluído")}async function toggleStore(){if(!requireAdmin())return;await fetch("/api/admin/store-open",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},body:JSON.stringify({open:!storeOpenCache})});loadProducts();loadDashboard();toastMsg("Status da loja atualizado")}async function saveCategories(){if(!requireAdmin())return;const categories=categoriesText.value.split("\n").map(x=>x.trim()).filter(Boolean),r=await fetch("/api/admin/categories",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},body:JSON.stringify({categories})}),d=await r.json();if(d.ok){categoriesCache=d.categories;renderCategorySelects();toastMsg("Categorias salvas!")}else toastMsg(d.error||"Erro ao salvar categorias","error")}
 renderMenu();updateCartCount();loadPublic();if(token)go(role==="admin"?"admin":"shop");else go("home");
 </script>
 </body>
